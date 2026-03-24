@@ -1,0 +1,5 @@
+[20-Mar-2026 11:30:31 Europe/Berlin] PHP Fatal error:  Uncaught TypeError: Only arrays and Traversables can be unpacked in C:\xampp\htdocs\skillshop_online\db\connection.php:51
+Stack trace:
+#0 C:\xampp\htdocs\skillshop_online\process\saveFeedback.php(54): Database::search('SELECT ii.`id` ...', Array, 'ii')
+#1 {main}
+  thrown in C:\xampp\htdocs\skillshop_online\db\connection.php on line 51
