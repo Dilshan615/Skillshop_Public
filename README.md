@@ -101,4 +101,4 @@ SkillShop is designed with a **premium user experience** in mind:
 
 ---
 
-© 2026 SkillShop. All rights reserved. Developed with ❤️ by Dilshan [Manja].
+© 2026 SkillShop. All rights reserved. Developed by Dilshan [Manja].
