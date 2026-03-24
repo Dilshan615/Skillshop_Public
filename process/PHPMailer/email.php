@@ -12,14 +12,14 @@ class EmailHelper
 
     // Send password reset code
     public static function sendResetCode($email, $name, $code)
-    {
+    { 
         try {
             $mail = new PHPMailer();
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';      // Configure as needed
             $mail->SMTPAuth = true;
-            $mail->Username = 'cheetahgampaha@gmail.com';                 // Add your email
-            $mail->Password = 'wxnzslbigyjtrtzd';                 // Add your password
+            $mail->Username = '';// Add your email
+            $mail->Password = '';// Add your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 

@@ -6,7 +6,7 @@ class Database
     public static function getConnection()
     {
         if (!isset(self::$connection)) {
-            self::$connection = new mysqli("localhost", "root", "Manja123#", "skillshop_db", 3306);
+            self::$connection = new mysqli("localhost", "root", "", "skillshop_db", 3306);
 
             if (self::$connection->connect_error) {
                 die("Connection failed: " . self::$connection->connect_error);
@@ -14,7 +14,7 @@ class Database
         }
         return self::$connection;
     }
-
+ 
     public static function iud($query, $types = null, $params = [])
     {
         $conn = self::getConnection();

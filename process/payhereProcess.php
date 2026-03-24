@@ -123,8 +123,8 @@ while ($item = $cartItemsQ->fetch_assoc()) {
 $total = $subtotal + $totalDeliveryfee;
 
 // Payhere configuration
-$merchantId = "1232356";
-$merchantSecret = "MzkzNDMxODU2NTI4ODAxNDkwNTMzNDE2MTAyNTE3MTA4OTY2ODM2";
+$merchantId = "";
+$merchantSecret = "";
 $currency = "LKR";
 $formattedTotal = number_format($total, 2, ".", "");
 $orderId = "ORD" . uniqid() . time();
