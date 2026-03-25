@@ -189,11 +189,11 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `skillshop_db`.`feedback` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `product_id` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
   `rating` INT NOT NULL,
-  `messege` TEXT CHARACTER SET 'utf8mb3' NOT NULL,
-  `is_featured` TINYINT NULL DEFAULT NULL,
+  `message` TEXT NOT NULL,
+  `is_featured` TINYINT NULL DEFAULT 0,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -206,8 +206,7 @@ CREATE TABLE IF NOT EXISTS `skillshop_db`.`feedback` (
     FOREIGN KEY (`user_id`)
     REFERENCES `skillshop_db`.`user` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 20
-DEFAULT CHARACTER SET = utf8mb3;
+AUTO_INCREMENT = 20;
 
 
 -- -----------------------------------------------------
@@ -405,6 +404,19 @@ AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+
+-- -----------------------------------------------------
+-- Table `skillshop_db`.`admin`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `skillshop_db`.`admin` (
+  `email` VARCHAR(100) NOT NULL,
+  `fname` VARCHAR(45) NOT NULL,
+  `lname` VARCHAR(45) NOT NULL,
+  `vcode` VARCHAR(20) NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`email`))
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
