@@ -370,7 +370,7 @@ if ($productResult && $productResult->num_rows > 0) {
 
     <!-- Chat Area -->
     <div class="md:col-span-2 flex flex-col bg-gray-50/30 h-[600px] overflow-hidden">
-      <div id="chatHeader" class="p-6 border-b border-gray-100 bg-white flex justify-between items-center hidden flex-shrink-0">
+      <div id="chatHeader" class="p-0 border-b border-gray-100 bg-white flex justify-between items-center hidden flex-shrink-0">
         <div>
           <p id="chatWith" class="font-extrabold text-gray-900"></p>
           <p class="text-xs text-blue-600 font-bold uppercase tracking-wider">Buyer Chat</p>
@@ -411,7 +411,7 @@ if ($productResult && $productResult->num_rows > 0) {
 
                 chats.forEach(chat => {
                    const div = document.createElement('div');
-                   div.className = `p-5 hover:bg-gray-50 cursor-pointer transition-all border-l-4 ${activeOtherId == chat.id ?
+                   div.className = `p5 hover:bg-gray-50 cursor-pointer transition-all border-1-4 ${activeOtherId == chat.id ?
                 'bg-blue-50/50 border-blue-600' : 'border-transparent'}`;
                 div.onclick = () => selectChat(chat.id, chat.name);
 
@@ -467,9 +467,9 @@ if ($productResult && $productResult->num_rows > 0) {
                     var seenHtml = '';
                     if(m.side == 'right'){
                         if(m.status == 'seen'){
-                            seenHtml = '<span class="ml-2 text-blue-400 font-bold">✓✓</span>';
+                            seenHtml = '<span class="ml-2 text-blue-400 font-bold>✓✓</span>';
                         }else{
-                            seenHtml = '<span class="ml-2 text-blue-400 font-bold">✓</span>';
+                            seenHtml = '<span class="ml-2 text-blue-400 font-bold>✓</span>';
                         }
                     }
 
@@ -489,13 +489,13 @@ if ($productResult && $productResult->num_rows > 0) {
               
                     `;
 
+                    // Only scroll if content changed
+                    if (area.innerHTML != html) {
+                        area.innerHTML = html;
+                        area.scrollTop = area.scrollHeight;
+                    }
+
                 });
-                
-                // Only scroll if content changed
-                if (area.innerHTML != html) {
-                    area.innerHTML = html;
-                    area.scrollTop = area.scrollHeight;
-                }
 
             }
 
@@ -569,7 +569,7 @@ if ($productResult && $productResult->num_rows > 0) {
       if(data.success){
           const newStatus = data.newStatus;
           //change button color and text
-          if(newStatus == "inactive"){
+          if(newStatus == "blocked"){
             button.textContent = "Activate";
             button.classList.remove("bg-red-100","text-red-800","border-red-300");
             button.classList.add("bg-green-100","text-green-800","border-green-300");
@@ -588,14 +588,14 @@ if ($productResult && $productResult->num_rows > 0) {
               statusBadge.textContent = "Active";
             }else{
               statusBadge.classList.add("bg-red-100","text-red-800");
-              statusBadge.textContent = "Inactive";
+              statusBadge.textContent = "Blocked";
             }
           }
 
           //show success message
           const message = document.createElement("div");
           message.className = "fixed top-24 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50";
-          message.textContent = `Product ${newStatus == "active" ? "activated" : "deactivated"} successfully!`;
+          message.textContent = `Product ${newStatus == "active" ? "activated" : "Blocked"} successfully!`;
           document.body.appendChild(message);
           setTimeout(()=> message.remove(),3000);
 

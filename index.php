@@ -1,8 +1,9 @@
 <?php
 
 session_start();
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
-    header("Location: home.php");
+
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+    header("Location:home.php");
     exit();
 }
 
@@ -19,7 +20,7 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
     <title>Skill Shop</title>
     <link rel="icon" type="images/phg" href="./assets/images/competence.png">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
@@ -75,7 +76,7 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                             <label for="rememberMe" class="flex items-center">
                                 <input type="checkbox" name="rememberMe" id="rememberMe"
                                     class="w-4 h-4 text-blue-600 rounded" <?php if ($rememberMe)
-                                                                                echo "checked"; ?> />
+                                        echo "checked"; ?> />
                                 <span class="ml-2 text-sm text-gray-600">Remember Me</span>
                             </label>
                             <button type="button" onclick="Fogetpassword()"

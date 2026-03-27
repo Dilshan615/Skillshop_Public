@@ -29,7 +29,7 @@ if (isset($_SESSION["admin_logged_in"]) && $_SESSION["admin_logged_in"] == true)
     <div class="w-full max-w-md bg-white rounded-[24px] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]">
         <!-- Step 1: Email Input -->
         <div id="step1">
-            <div class="bg-[#1a2332] p-10 text-center text-white">
+            <div class="bg-slate-900 p-10 text-center text-white">
                 <div class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/40">
                     <i class="fas fa-user-shield text-3xl text-white"></i>
                 </div>
@@ -67,7 +67,7 @@ if (isset($_SESSION["admin_logged_in"]) && $_SESSION["admin_logged_in"] == true)
                     <i class="fas fa-lock text-3xl text-white"></i>
                 </div>
                 <h1 class="text-3xl font-bold tracking-tight">Verification</h1>
-                <p class="text-slate-400 text-sm mt-2" id="sentEmailLabel">Code sent to admin@gmail.com</p>
+                <p class="text-slate-400 text-sm mt-2" id="sentEmailLabel"></p>
             </div>
 
             <div class="p-10">

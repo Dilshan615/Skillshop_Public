@@ -258,7 +258,7 @@ require "header.php";
                                 $name = trim(($rv['fname'] ?? '') . ' ' . ($rv['lname'] ?? ''));
                                 $name = $name !== '' ? $name : 'Anonymous';
                                 $init = strtoupper(($rv['fname'][0] ?? 'A') . ($rv['lname'][0] ?? ''));
-                            ?>
+                                ?>
                                 <div class="flex gap-3 p-4 rounded-2xl bg-slate-50">
                                     <div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center text-white
                         text-xs font-bold bg-gradient-to-br from-blue-500 to-indigo-600"><?= $init ?></div>
@@ -307,153 +307,150 @@ require "header.php";
                             <?php endforeach; ?>
                         </div>
                     </div>
-            </div> <?php endif; ?> <!-- left end -->
+                </div> <?php endif; ?> <!-- left end -->
 
-        <!-- right/ sticky sidebar -->
-        <aside class="lg:w-80 flex-shrink-0">
-            <div class="sticky top-24 space-y-4">
-                <!-- cta card-->
-                <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-xl">
-                    <?php if ($p["image_url"]): ?>
-                        <div class="h-40 overflow-hidden">
-                            <img src="<?= $p["image_url"] ?>" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-5">
-                            <p class="text-2xl font-extrabold text-gray-900 mb-0.5">Rs.
-                                <?= number_format($p["price"], 2) ?></p>
-                            <p class="text-xs text-gray-400 mb-4">One time - Lifetime access</p>
+            <!-- right/ sticky sidebar -->
+            <aside class="lg:w-80 flex-shrink-0">
+                <div class="sticky top-24 space-y-4">
+                    <!-- cta card-->
+                    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-xl">
+                        <?php if ($p["image_url"]): ?>
+                            <div class="h-40 overflow-hidden">
+                                <img src="<?= $p["image_url"] ?>" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-5">
+                                <p class="text-2xl font-extrabold text-gray-900 mb-0.5">Rs.
+                                    <?= number_format($p["price"], 2) ?></p>
+                                <p class="text-xs text-gray-400 mb-4">One time - Lifetime access</p>
 
-                            <!-- enroll / status -->
-                            <?php if ($bought): ?>
-                                <div
-                                    class="flex items-center justify-center gap-2 py-3 mb-3 rounded-xl text-sm font-bold text-green-700 bg-green-50 border-2 border-green-300">
-                                    ✓ Already Enrolled
-                                </div>
-                                <a href="buyer-dashboard.php?tab=learning"
-                                    class="block w-full py-3.5 text-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 mb-3">
-                                    Go to My Learnings
+                                <!-- enroll / status -->
+                                <?php if ($bought): ?>
+                                    <div
+                                        class="flex items-center justify-center gap-2 py-3 mb-3 rounded-xl text-sm font-bold text-green-700 bg-green-50 border-2 border-green-300">
+                                        ✓ Already Enrolled
+                                    </div>
+                                    <a href="buyer-dashboard.php?tab=learning"
+                                        class="block w-full py-3.5 text-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 mb-3">
+                                        Go to My Learnings
+                                    </a>
+
+                                <?php elseif ($loggedIn && $userRole == "buyer"): ?>
+                                  <a href="process/checkout.php?id=<?php echo $p["id"]; ?>" 
+                                 class="block w-full py-3.5 text-center bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 shadow-md mb-3">
+                                 🎓 Enroll Now
                                 </a>
 
-                            <?php elseif ($loggedIn && $userRole == "buyer"): ?>
-                                <a href="process/checkout.php?id=<?php echo $p["id"]; ?>"
-                                    class="block w-full py-3.5 text-center bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 shadow-md mb-3">
-                                    🎓 Enroll Now
-                                </a>
 
-
-                                <!-- Cart / Watchlist -->
-                                <div class="flex gap-2 mb-4">
-                                    <!-- Cart Button -->
-                                    <button id="cart-btn"
-                                        class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 
+                                   <!-- Cart / Watchlist -->
+                    <div class="flex gap-2 mb-4">
+                <!-- Cart Button -->
+                 <button id="cart-btn" 
+                         class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 
                                 font-semibold text-sm transition-all border-slate-200 text-slate-600 
-                                hover:border-blue-400 hover:text-blue-600"
-                                        data-product-id="<?= $productId; ?>"
-                                        data-in-cart="<?= $inCart ? 1 : 0; ?>">
-                                        <span id="cart-text"><?= $inCart ? "In Cart" : "Add to Cart"; ?></span>
-                                    </button>
+                                hover:border-blue-400 hover:text-blue-600" 
+                            data-product-id="<?= $productId; ?>" 
+                            data-in-cart="<?= $inCart ? 1 : 0; ?>">
+                <span id="cart-text"><?= $inCart ? "In Cart" : "Add to Cart"; ?></span>
+                </button>
 
-                                    <!-- Watchlist Button -->
-                                    <button id="wl-btn"
-                                        class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 
+                <!-- Watchlist Button -->
+                <button id="wl-btn" 
+                        class="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 
                                font-semibold text-sm transition-all border-slate-200 text-slate-600 
-                               hover:border-rose-400 hover:text-rose-600"
-                                        data-product-id="<?= $productId; ?>"
-                                        data-in-wl="<?= $inWatchlist ? 1 : 0; ?>">
-                                        <span id="wl-text"><?= $inWatchlist ? "In Watchlist" : "Watchlist"; ?></span>
-                                    </button>
-                                </div>
+                               hover:border-rose-400 hover:text-rose-600" 
+                        data-product-id="<?= $productId; ?>" 
+                        data-in-wl="<?= $inWatchlist ? 1 : 0; ?>">
+                    <span id="wl-text"><?= $inWatchlist ? "In Watchlist" : "Watchlist"; ?></span>
+                </button>
+            </div>
 
 
 
                             <?php elseif (!$loggedIn): ?>
                                 <a href="index.php"
-                                    class="block w-full py-3.5 text-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 shadow-md mb-3">
-                                    Sign in to Enroll
-                                </a>
-                            <?php else: ?>
-                                <div class="text-center py-3 text-sm text-gray-400 mb-4">Sellers cannot enroll</div>
-                            <?php endif; ?>
+                                       class="block w-full py-3.5 text-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all active:scale-95 shadow-md mb-3">
+                                       Sign in to Enroll
+                                   </a>
+                               <?php else: ?>
+                                   <div class="text-center py-3 text-sm text-gray-400 mb-4">Sellers cannot enroll</div>
+                               <?php endif; ?>
 
-                            <!-- Meta info -->
-                            <div class="space-y-2.5 text-sm border-t border-salte-100 pt-4">
-                                <?php foreach (
-                                    [
+                               <!-- Meta info -->
+                                <div class="space-y-2.5 text-sm border-t border-salte-100 pt-4">
+                                    <?php foreach ([
                                         ["📊", "Level", $p["level"]],
                                         ["👥", "Students", number_format($stuc) . " enrolled"],
                                         ["⭐", "Rating", $avgR > 0 ? "$avgR / 5 ($revC reviews)" . ($revC != 1 ? "s" : "") : "No reviews yet"],
                                         ["📅", "Added", date("F Y", strtotime($p["created_at"]))],
-                                    ] as [$ico, $lbl, $val]
-                                ): ?>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-gray-500"><?php echo $ico ?><?php echo $lbl ?></span>
-                                        <span class="font-semibold text-gray-800 text-right"><?php echo $val ?></span>
-                                    </div>
-                                <?php endforeach; ?>
+                                    ] as [$ico, $lbl, $val]): ?>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-500"><?php echo $ico ?><?php echo $lbl ?></span>
+                                            <span class="font-semibold text-gray-800 text-right"><?php echo $val ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- instructor card -->
+                        <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-xl">
+                            <h3 class="font-bold text-gray-900 mb-4">Instructor</h3>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center text-white
+            font-bold text-lg bg-gradient-to-br from-blue-600 to-indigo-600"><?= strtoupper($p["fname"][0]) ?? "S" ?>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900"><?= $sellerName ?></p>
+                                    <p class="text-xs text-blue-600 font-medium">Skill Instructor</p>
+                                    <?php if ($p["s_joined"]): ?>
+                                        <p class="text-xs text-gray-400">Since <?= date("M Y", strtotime($p["s_joined"])) ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
 
-                        </div>
-                </div>
+                            <!-- stats inside card -->
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div class="rounded-xl py-2 bg-blue-50">
+                                    <p class="font-extrabold text-sm text-blue-600"><?= number_format($ss["tc"]) ?></p>
+                                    <p class="text-xs text-gray-500">Courses</p>
+                                </div>
+                                <div class="rounded-xl py-2 bg-green-50">
+                                    <p class="font-extrabold text-sm text-green-600"><?= number_format($ss["ts"]) ?></p>
+                                    <p class="text-xs text-gray-500">Students</p>
+                                </div>
+                                <div class="rounded-xl py-2 bg-yellow-50">
+                                    <p class="font-extrabold text-sm text-yellow-600">
+                                        <?= $ss["tr"] > 0 ? round($ss["tr"], 1) : "No ratings"; ?>
+                                    </p>
+                                    <p class="text-xs text-gray-500">Rating</p>
+                                </div>
+                            </div>
 
-                <!-- instructor card -->
-                <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-xl">
-                    <h3 class="font-bold text-gray-900 mb-4">Instructor</h3>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center text-white
-            font-bold text-lg bg-gradient-to-br from-blue-600 to-indigo-600"><?= strtoupper($p["fname"][0]) ?? "S" ?>
-                        </div>
-                        <div>
-                            <p class="font-bold text-gray-900"><?= $sellerName ?></p>
-                            <p class="text-xs text-blue-600 font-medium">Skill Instructor</p>
-                            <?php if ($p["s_joined"]): ?>
-                                <p class="text-xs text-gray-400">Since <?= date("M Y", strtotime($p["s_joined"])) ?></p>
+                            <?php if ($loggedIn && $userRole == "buyer"): ?>
+                                <a href="buyer-dashboard.php?tab=messages&other_id=<?= $p["sid"] ?>&other_name=<?= urlencode($sellerName); ?>" class="block w-full py-2.5 text-center border-2 border-slate-200
+    text-gray-900 hover:border-blue-400 hover:text-blue-600 font-semibold rounded-xl transition-all text-sm">
+                                    ✉️ Message Instructor
+                                </a>
                             <?php endif; ?>
                         </div>
+
                     </div>
 
-                    <!-- stats inside card -->
-                    <div class="grid grid-cols-3 gap-2 text-center">
-                        <div class="rounded-xl py-2 bg-blue-50">
-                            <p class="font-extrabold text-sm text-blue-600"><?= number_format($ss["tc"]) ?></p>
-                            <p class="text-xs text-gray-500">Courses</p>
-                        </div>
-                        <div class="rounded-xl py-2 bg-green-50">
-                            <p class="font-extrabold text-sm text-green-600"><?= number_format($ss["ts"]) ?></p>
-                            <p class="text-xs text-gray-500">Students</p>
-                        </div>
-                        <div class="rounded-xl py-2 bg-yellow-50">
-                            <p class="font-extrabold text-sm text-yellow-600">
-                                <?= $ss["tr"] > 0 ? round($ss["tr"], 1) : "No ratings"; ?>
-                            </p>
-                            <p class="text-xs text-gray-500">Rating</p>
-                        </div>
-                    </div>
-
-                    <?php if ($loggedIn && $userRole == "buyer"): ?>
-                        <a href="buyer-dashboard.php?tab=messages&other_id=<?= $p["sid"] ?>&other_name=<?= urlencode($sellerName); ?>" class="block w-full py-2.5 text-center border-2 border-slate-200
-    text-gray-900 hover:border-blue-400 hover:text-blue-600 font-semibold rounded-xl transition-all text-sm">
-                            ✉️ Message Instructor
-                        </a>
-                    <?php endif; ?>
-                </div>
+                </aside>
 
             </div>
-
-        </aside>
-
         </div>
     </div>
-</div>
 <?php endif; ?>
 
 <script>
+    
     function stars(n) {
-        return Array.from({
-            length: 5
-        }, (_, i) => `<span>${i < n ? '★' : '☆'}</span>`).join('');
+        return Array.from({ length: 5 }, (_, i) => `<span>${i < n ? '★' : '☆'}</span>`).join('');
     }
 
-
+   
     document.querySelectorAll('[data-star]').forEach(e => {
         e.innerHTML = stars(+e.dataset.star);
     });
@@ -462,76 +459,79 @@ require "header.php";
     if (avgEl) avgEl.innerHTML = stars(<?= round($avgR) ?>);
 
     (function() {
-        const wl = document.getElementById("wl-btn");
-        if (!wl || !wl.dataset.productId) return;
+    const wl = document.getElementById("wl-btn");
+    if (!wl || !wl.dataset.productId) return;
 
-        wl.addEventListener("click", async (e) => {
-            e.preventDefault();
-            const id = wl.dataset.productId;
-            if (!id) return;
+    wl.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const id = wl.dataset.productId;
+        if (!id) return;
 
-            const fd = new FormData();
-            fd.append("product_id", id);
+        const fd = new FormData();
+        fd.append("product_id", id);
 
-            try {
-                const r = await fetch("process/watchlistProcess.php", {
-                    method: "POST",
-                    body: fd
-                });
-                const j = await r.json();
-                if (j.success) {
+        try {
+            const r = await fetch("process/watchlistProcess.php", {
+                method: "POST",
+                body: fd
+            });
+         const j = await r.json();
+            if (j.success) {
 
-                    const inw = j.action == "added";
-                    wl.dataset.in = inw ? 1 : 0;
-                    wl.querySelector("#wl-text").textContent = inw ? "In Watchlist" : "Watchlist";
-                    if (wl.firstChild) wl.firstChild.textContent = (inw ? "❤︎" : "♡") + ' ';
+              const inw = j.action == "added";
+              wl.dataset.in = inw ? 1 : 0;
+              wl.querySelector("#wl-text").textContent = inw ? "In Watchlist": "Watchlist";
+              if(wl.firstChild) wl.firstChild.textContent = (inw ? "❤︎" : "♡") + ' ';
 
-                }
-            } catch (e) {}
-        });
-    })();
+            }
+        } catch (e) {}
+    });
+})();
 
+        
+           (function() {
+    const ct = document.getElementById("cart-btn");
+    if (!ct || !ct.dataset.productId) return;
 
-    (function() {
-        const ct = document.getElementById("cart-btn");
-        if (!ct || !ct.dataset.productId) return;
+    ct.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const id = ct.dataset.productId;
+        if (!id) return;
 
-        ct.addEventListener("click", async (e) => {
-            e.preventDefault();
-            const id = ct.dataset.productId;
-            if (!id) return;
+        const fd = new FormData();
+        fd.append("product_id", id);
 
-            const fd = new FormData();
-            fd.append("product_id", id);
+        try {
+            const r = await fetch("process/cartProcess.php", {
+                method: "POST",
+                body: fd
+            });
 
-            try {
-                const r = await fetch("process/cartProcess.php", {
-                    method: "POST",
-                    body: fd
-                });
+            const j = await r.json();
+            if (j.success) {
+              const inc = j.action == "added";
+              ct.dataset.inCart = inc ? 1 : 0;
 
-                const j = await r.json();
-                if (j.success) {
-                    const inc = j.action == "added";
-                    ct.dataset.inCart = inc ? 1 : 0;
-
-                    document.getElementById("cart-text").textContent = inc ? "In Cart" : "Add to Cart";
-                    ct.className = `flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 font-semibold
+              document.getElementById("cart-text").textContent = inc ? "In Cart" : "Add to Cart";
+              ct.className = `flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 font-semibold
               text-sm transition-all ${inc ? "border-blue-400 text-blue-600 bg-blue-50" : "border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600"}`;
 
-                    // update header
-                    const cc = document.getElementById("cart-count");
-                    if (cc) {
-                        let count = parseInt(cc.textContent) || 0;
-                        count = inc ? count + 1 : count - 1;
-                        cc.textContent = count;
-                        cc.classList.toggle("hidden", count <= 0);
-                        cc.classList.toggle("flex", count > 0);
-                    }
-                }
-            } catch (e) {}
-        });
-    })();
+              // update header
+              const cc = document.getElementById("cart-count");
+              if(cc){
+                let count = parseInt(cc.textContent) || 0;
+                count = inc ? count + 1 : count - 1;
+                cc.textContent = count;
+                cc.classList.toggle("hidden", count <= 0);
+                cc.classList.toggle("flex", count > 0);
+              }
+            }
+        } catch (e) {}
+    });
+})();
+
+
+           
 </script>
 
 

@@ -37,7 +37,7 @@ if (!$statusResult || $statusResult->num_rows === 0) {
 $currentStatus = $statusResult->fetch_assoc()["status"];
 
 // toggle status
-$newStatus = ($currentStatus === "active") ? "inactive" : "active";
+$newStatus = ($currentStatus === "active") ? "blocked" : "active";
 
 // update product status
 $result = Database::iud(

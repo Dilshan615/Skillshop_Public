@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_SESSION)) session_start();
+if(!isset($_SESSION)) session_start();
 
 require_once "../db/connection.php";
 
@@ -14,19 +14,19 @@ if (!class_exists('Database')) {
 }
 
 // Check if user is logged in and is a buyer
-if (!isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]) {
+if(!isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]){
     echo json_encode(["success" => false, "message" => "Please log in first!"]);
     exit;
 }
 
-if (($_SESSION["active_account_type"] ?? "") != "buyer") {
+if(($_SESSION["active_account_type"] ?? "") != "buyer"){
     echo json_encode(["success" => false, "message" => "Only buyers can checkout!"]);
     exit;
 }
 
 // Get user ID
 $userId = intval($_SESSION["user_id"] ?? 0);
-if ($userId == 0) {
+if($userId == 0){
     echo json_encode(["success" => false, "message" => "Invalid user ID!"]);
     exit;
 }
@@ -53,12 +53,12 @@ $cartItemsQ = Database::search(
 );
 
 // Check if cart has items
-if (!$cartItemsQ) {
+if(!$cartItemsQ){
     echo json_encode(["success" => false, "message" => "Database error: Failed to fetch cart items"]);
     exit;
 }
 
-if ($cartItemsQ->num_rows == 0) {
+if($cartItemsQ->num_rows == 0){
     echo json_encode(["success" => false, "message" => "Your cart is empty!"]);
     exit;
 }
@@ -67,13 +67,13 @@ if ($cartItemsQ->num_rows == 0) {
 $buyerCityQ = Database::search(
     "SELECT a.`city_id` FROM `user_profile` up
      JOIN `address` a ON up.`address_id` = a.`id`
-     WHERE up.`user_id` = ?",
-    "i",
+     WHERE up.`user_id` = ?", 
+    "i", 
     [$userId]
 );
 
 $buyerCityId = 0;
-if ($buyerCityQ && $buyerCityQ->num_rows > 0) {
+if($buyerCityQ && $buyerCityQ->num_rows > 0) {
     $buyerCityData = $buyerCityQ->fetch_assoc();
     $buyerCityId = intval($buyerCityData["city_id"] ?? 0);
 }
@@ -112,7 +112,7 @@ while ($item = $cartItemsQ->fetch_assoc()) {
     $sellerId = $item["seller_id"];
     if (!isset($sellersInCart[$sellerId])) {
         $deliveryFee = 500; // Default delivery fee
-        if ($buyerCityId != 0 && isset($item["seller_city_id"])) {
+        if($buyerCityId != 0 && isset($item["seller_city_id"])) {
             $deliveryFee = ($item["seller_city_id"] == $buyerCityId) ? 500 : 500;
         }
         $totalDeliveryfee += $deliveryFee;
@@ -123,8 +123,8 @@ while ($item = $cartItemsQ->fetch_assoc()) {
 $total = $subtotal + $totalDeliveryfee;
 
 // Payhere configuration
-$merchantId = "";
-$merchantSecret = "";
+$merchantId = "1232356";
+$merchantSecret = "MzkzNDMxODU2NTI4ODAxNDkwNTMzNDE2MTAyNTE3MTA4OTY2ODM2";
 $currency = "LKR";
 $formattedTotal = number_format($total, 2, ".", "");
 $orderId = "ORD" . uniqid() . time();
@@ -133,10 +133,10 @@ $orderId = "ORD" . uniqid() . time();
 $hash = strtoupper(
     md5(
         $merchantId .
-            $orderId .
-            $formattedTotal .
-            $currency .
-            strtoupper(md5($merchantSecret))
+        $orderId .
+        $formattedTotal . 
+        $currency .
+        strtoupper(md5($merchantSecret))
     )
 );
 
@@ -167,24 +167,24 @@ $user = $userQ->fetch_assoc();
 // Prepare items string (limit to first 3 items for Payhere)
 $itemNames = array_slice(array_column($cartItems, 'title'), 0, 3);
 $itemsString = implode(', ', $itemNames);
-if (count($cartItems) > 3) {
+if(count($cartItems) > 3) {
     $itemsString .= ' and ' . (count($cartItems) - 3) . ' more items';
 }
 
 // Create payment object
 $paymentObject = [
-    "sandbox" => true,
+    "sandbox" => true, 
     "merchant_id" => $merchantId,
     "return_url" => "http://localhost/skillshop_online/buyer-dashboard.php",
     "cancel_url" => "http://localhost/skillshop_online/buyer-dashboard.php",
     "notify_url" => "http://localhost/skillshop_online/process/payhereNotify.php",
     "order_id" => $orderId,
     "items" => $itemsString,
-    "amount" => $formattedTotal,
+    "amount" => $formattedTotal, 
     "currency" => $currency,
     "hash" => $hash,
     "first_name" => $user["fname"],
-    "last_name" => $user["lname"],
+    "last_name" => $user["lname"], 
     "email" => $user["email"],
     "phone" => $user["mobile"],
     "address" => trim(($user["line_1"] ?? "") . " " . ($user["line_2"] ?? "")),
@@ -206,3 +206,4 @@ $_SESSION['pending_order'] = [
 
 echo json_encode(["success" => true, "payment" => $paymentObject]);
 exit;
+?>
