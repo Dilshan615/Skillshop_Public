@@ -68,7 +68,8 @@ $recentOrders = Database::search(
                         <p class="text-[10px] text-slate-400 uppercase">Administrator</p>
                     </div>
                 </div>
-                <a href="process/adminLogoutProcess.php" class="block w-full text-center py-2 bg-slate-800 hover:bg-red-900/40 hover:text-red-400 rounded-lg text-xs font-bold transition-all border border-slate-700">Logout</a>
+                <a href="process/LogoutProcess.php" class="block w-full text-center py-2 bg-slate-800 hover:bg-red-900/40 hover:text-red-400 rounded-lg
+                text-xs font-bold transition-all border border-slate-700">Logout</a>
             </div>
 
         </aside>

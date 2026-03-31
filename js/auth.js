@@ -295,3 +295,78 @@ function backToEmail() {
     document.getElementById("verify-message").classList.add("hidden");
     document.getElementById("forgot-message").classList.add("hidden");
 }
+
+// Admin Logic
+function adminLogin(event) {
+    if (event) event.preventDefault();
+    var email = document.getElementById("email").value;
+    var loginBtn = document.getElementById("loginBtn");
+
+    if (!email) {
+        alert("Please enter email");
+        return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = "Sending... <span class='inline-block animate-spin'>⌛</span>";
+
+    var form = new FormData();
+    form.append("email", email);
+
+    var r = new XMLHttpRequest();
+    r.open("POST", "process/adminLoginProcess.php", true);
+    r.onload = function () {
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = "Send Verification Code";
+        var response = r.responseText.trim();
+
+        if (response == "success") {
+            document.getElementById("step-1").classList.add("hidden");
+            document.getElementById("step-2").classList.remove("hidden");
+            document.getElementById("headerTitle").innerText = "Verification";
+            document.getElementById("headerSubtitle").innerText = "Enter the 6-digit code sent to " + email;
+        } else {
+            alert(response);
+        }
+    };
+    r.send(form);
+}
+
+function adminVerfiy(event) {
+    if (event) event.preventDefault();
+    var vcode = document.getElementById("vcode").value;
+    var verifyBtn = document.getElementById("verifyBtn");
+
+    if (vcode.length != 6) {
+        alert("Please enter 6-digit code");
+        return;
+    }
+
+    verifyBtn.disabled = true;
+    verifyBtn.innerHTML = "Verifying... <span class='inline-block animate-spin'>⌛</span>";
+
+    var form = new FormData();
+    form.append("vcode", vcode);
+
+    var r = new XMLHttpRequest();
+    r.open("POST", "process/adminVerifyProcess.php", true);
+    r.onload = function () {
+        verifyBtn.disabled = false;
+        verifyBtn.innerHTML = "Verify & Login";
+        var response = r.responseText.trim();
+
+        if (response == "success") {
+            window.location = "admin-dashboard.php";
+        } else {
+            alert(response);
+        }
+    };
+    r.send(form);
+}
+
+function goToStep1() {
+    document.getElementById("step-1").classList.remove("hidden");
+    document.getElementById("step-2").classList.add("hidden");
+    document.getElementById("headerTitle").innerText = "Admin Panel";
+    document.getElementById("headerSubtitle").innerText = "sign in to manage SkillShop";
+}

@@ -22,7 +22,7 @@ if($res && $res->num_rows > 0){
   $user = $res->fetch_assoc();
   $newStatus = ($user["status"] == "active") ? "blocked" : "active";
 
-  // Corrected: Added "si" (string, integer) types definition for the prepared statement
+
   Database::iud("UPDATE `user` SET `status`=? WHERE `id`=?", "si", [$newStatus, $id]);
 
   echo json_encode(["success" => true, "newStatus" => $newStatus]);

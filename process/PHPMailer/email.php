@@ -18,8 +18,8 @@ class EmailHelper
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';      // Configure as needed
             $mail->SMTPAuth = true;
-            $mail->Username = ''; // Add your email
-            $mail->Password = ''; // Add your password
+            $mail->Username = '';                 // Add your email
+            $mail->Password = '';                 // Add your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -70,8 +70,8 @@ class EmailHelper
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';      // Configure as needed
             $mail->SMTPAuth = true;
-            $mail->Username = ''; // Add your email
-            $mail->Password = ''; // Add your password
+            $mail->Username = '';                 // Add your email
+            $mail->Password = '';                 // Add your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
