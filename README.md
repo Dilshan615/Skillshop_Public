@@ -32,11 +32,12 @@ Welcome to **SkillShop**, a sophisticated, feature-rich e-commerce platform desi
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend** | HTML5, CSS3, JavaScript, Bootstrap |
-| **Backend** | PHP 8.x |
+| **Frontend** | HTML5, Tailwind CSS, Custom CSS, Vanilla JavaScript (AJAX / XMLHttpRequest) |
+| **Backend** | PHP 8.x (OOP Architecture) |
 | **Database** | MySQL |
-| **Payments** | Payhere SDK |
-| **Email** | PHPMailer (SMTP) |
+| **Payments** | Payhere Payment Gateway Integration |
+| **Email** | PHPMailer (SMTP Service) |
+| **Design / Icons** | Font Awesome (Icons), Google Fonts (Plus Jakarta Sans & Poppins) |
 
 ---
 
