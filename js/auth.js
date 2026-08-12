@@ -1,174 +1,177 @@
 function createAccount() {
-    var fname = document.getElementById("signup-fistname").value;
+
+    var fname = document.getElementById("signup-firstname").value;
     var lname = document.getElementById("signup-lastname").value;
     var email = document.getElementById("signup-email").value;
     var password = document.getElementById("signup-password").value;
-    var pconfirm = document.getElementById("signup-password-confirm").value;
-    var seller = document.getElementById("account_type_seller");
-    var buyer = document.getElementById("account_type_buyer");
-    var termsconditions = document.getElementById("terms_conditions");
-    var serror = document.getElementById("singup-error-Message");
-    error.classList.remove("hidden");
+    var cpassword = document.getElementById("signup-confirm").value;
+    var accountTypeSeller = document.getElementById("account_type_seller");
+    var accountTypeBuyer = document.getElementById("account_type_buyer");
+    var termsConditions = document.getElementById("terms_conditions");
+    var signupErrorMessage = document.getElementById("signup-message");
+    signupErrorMessage.classList.remove("hidden");
 
-    if (!fname || !lname || !email || !password || !pconfirm) {
-        serror.innerHTML = "All fields are required";
+    if (!fname || !lname || !email || !password || !cpassword) {
+        signupErrorMessage.innerHTML = "All fields are required!";
     } else if (password.length < 8) {
-        serror.innerHTML = "Password must contain at least 8 characters.";
-    } else if (password != pconfirm) {
-        serror.innerHTML = "Passwords do not match.";
-    } else if (!seller.checked && !buyer.checked) {
-        serror.innerHTML = "Please select Account type.";
-    } else if (!termsconditions.checked) {
-        serror.innerHTML = "Please read and check I agree to the Terms & Conditions.";
+        signupErrorMessage.innerHTML = "Password must be at least 8 characters";
+    } else if (password != cpassword) {
+        signupErrorMessage.innerHTML = "Password do not match";
+    } else if (!accountTypeSeller.checked && !accountTypeBuyer.checked) {
+        signupErrorMessage.innerHTML = "Please select account type";
+    } else if (!termsConditions.checked) {
+        signupErrorMessage.innerHTML = "Please read and check I agree to the Terms & Conditions";
     } else {
-        serror.classList.add("hidden");
+
+        signupErrorMessage.classList.add("hidden");
 
         var form = new FormData();
         form.append("fname", fname);
         form.append("lname", lname);
         form.append("email", email);
         form.append("password", password);
-        form.append("re_password", pconfirm);
-        form.append("account_type", seller.checked ? seller.value : buyer.value);
-        form.append("termsConditions", termsconditions.checked);
-
+        form.append("pass_confirm", cpassword);
+        form.append("account_type", accountTypeSeller.checked ? accountTypeSeller.value : accountTypeBuyer.value);
+        form.append("termsConditions", termsConditions.checked);
 
         var r = new XMLHttpRequest();
 
         r.onreadystatechange = function () {
             if (r.readyState == 4) {
-
-                serror.classList.remove("hidden");
+                signupErrorMessage.classList.remove("hidden");
                 if (r.status == 200) {
 
                     if (r.responseText == "success") {
-                        serror.classList.remove("text-red-500");
-                        serror.classList.add("text-green-500");
-                        serror.innerHTML = "Registion Successfull!";
-
+                        signupErrorMessage.classList.remove("text-red-500");
+                        signupErrorMessage.classList.add("text-green-500");
+                        signupErrorMessage.innerHTML = "Registration Successfull!";
                         setTimeout(() => {
                             window.location.reload();
                         }, 2000);
                     } else {
-                        serror.innerHTML = r.responseText;
+                        signupErrorMessage.innerHTML = r.responseText;
                     }
+
                 } else {
-                    serror.innerHTML = "Request failed !" + r.responseText;
+                    signupErrorMessage.innerHTML = "Request failed! : " + r.responseText;
                 }
-            }
+            } 
         }
         r.open("POST", "process/createAccountProcess.php", true);
         r.send(form);
-
     }
 }
 
-function login() {
+function signIn(){
+    
     var email = document.getElementById("signin-email").value;
     var password = document.getElementById("signin-password").value;
-    var remembarMe = document.getElementById("rememberMe");
-    var serror = document.getElementById("signin_error");
-    serror.classList.remove("hidden");
+    var rememberMe = document.getElementById("remember");
+    var signinErrorMessage = document.getElementById("signin-message");
+    signinErrorMessage.classList.remove("hidden");
 
     if (!email || !password) {
-        serror.innerHTML = "All fields are required";
-    } else if (!validateEmail(email)) {
-        serror.innerHTML = "Invalid email format!";
+        signinErrorMessage.innerHTML = "All fields are required!";
+    }  else if (!validateEmail(email)) {
+        signinErrorMessage.innerHTML = "Invalid email format!";
     } else {
-        serror.classList.add("hidden");
+        signinErrorMessage.classList.add("hidden");
 
         var form = new FormData();
-        form.append("email", email);
-        form.append("password", password);
-        form.append("remembarMe", remembarMe.checked ? "true" : "false");
+        form.append("email",email);
+        form.append("password",password);
+        form.append("rememberMe", rememberMe.checked ? "true" : "false");
 
         var r = new XMLHttpRequest();
 
-        r.onreadystatechange = function () {
-            if (r.readyState == 4) {
-
-                serror.classList.remove("hidden");
-                if (r.status == 200) {
-
-                    if (r.responseText == "success") {
-                        serror.classList.remove("text-red-500");
-                        serror.classList.add("text-green-500");
-                        serror.innerHTML = "Login Successfull!";
-
-                        setTimeout(() => {
-                            window.location = "home.php";
-                        }, 2000);
+        r.onreadystatechange =  function (){
+            if(r.readyState == 4){
+                signinErrorMessage.classList.remove("hidden");
+                if(r.status == 200){
+                    if(r.responseText == "success"){
+                        signinErrorMessage.classList.remove("text-red-500");
+                        signinErrorMessage.classList.add("text-green-500");
+                        signinErrorMessage.innerHTML = "Login successfull! Redirecting..";
+                        setTimeout(()=>{
+                            window.location.href = "home.php";
+                        },2000);
                     } else {
-                        serror.innerHTML = r.responseText;
+                        signinErrorMessage.innerHTML = r.responseText;
                     }
                 } else {
-                    serror.innerHTML = "Request failed! :" + r.responseText;
+                    signinErrorMessage.innerHTML = "Request failed! : " + r.responseText;
                 }
             }
         }
-        r.open("POST", "process/loginProcess.php", true);
+        r.open("POST","process/loginProcess.php",true);
         r.send(form);
     }
 }
 
-function validateEmail(email) {
+function validateEmail(email){
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-function forgotPassword() {
+function forgotPassword(){
     var email = document.getElementById("forgot-email").value;
-    var forgot_message = document.getElementById("forgot-message");
-    forgot_message.classList.remove("hidden");
+    var msg = document.getElementById("forgot-message");
+    msg.classList.remove("hidden");
     var sendBtn = document.getElementById("forgot-password-send-code-btn");
 
-    if (!email || !validateEmail(email)) {
-        forgot_message.innerHTML = "Invalid email!";
+    if(!email || !validateEmail(email)){
+        msg.className = "text-red-500 text-sm rounded-lg mb-2 p-2";
+        msg.innerHTML = "Invalid email";
     } else {
 
         var form = new FormData();
-        form.append("email", email);
+        form.append("email",email);
 
-        forgot_message.innerHTML = "Sending .. <span class='inline-block animate-spn'>⏳</span>";
+        msg.className = "text-blue-500 text-sm rounded-lg mb-2 p-2";
+        msg.innerHTML = "Sending.. <span class='inline-block animate-spin'>⏳</span>";
         sendBtn.disabled = true;
         sendBtn.style.opacity = "0.6";
+
         var r = new XMLHttpRequest();
 
-        r.open("POST", "process/forgotPasswordProcess.php", true);
-        r.onload = () => {
+        r.open("POST","process/forgotPasswordProcess.php",true);
+
+        r.onload = ()=>{
             sendBtn.disabled = false;
             sendBtn.style.opacity = "1";
             var response = r.responseText;
-            forgot_message.classList.remove("hidden");
-            forgot_message.className = (response == "success" ? "text-green-500" : "text-red-500");
-            forgot_message.innerHTML = response == "success" ? "Code sent to your email!" : response;
-            if (response == "success") setTimeout(() => {
+            msg.classList.remove("hidden");
+            msg.className = "text-sm rounded-lg mb-2 p-2 " + (response == "success" ? "text-green-500" : "text-red-500");
+            msg.innerHTML = response == "success" ? "✓ Code sent to your email!" : response;
+            if(response == "success") setTimeout(()=>{
                 document.getElementById("forgot-step-1").classList.add("hidden");
                 document.getElementById("forgot-step-2").classList.remove("hidden");
                 document.getElementById("verify-message").classList.add("hidden");
-            }, 1500);
+            },1500);
         };
-        r.onerror = () => {
+
+        r.onerror = ()=>{
             sendBtn.disabled = false;
             sendBtn.style.opacity = "1";
-            forgot_message.classList.remove("hidden");
-            forgot_message.className = "text-red-500 text-sm rounded-1g mb-2 p-2";
-            forgot_message.innerHTML = "Network error. Please try again.";
+            msg.classList.remove("hidden");
+            msg.className = "text-red-500 text-sm rounded-lg mb-2 p-2";
+            msg.innerHTML = "Network error. Please try again.";
         };
         r.send(form);
     }
 }
 
-// Verify Code
 function verifyCode() {
     var code = document.getElementById("verify-code").value;
     var email = document.getElementById("forgot-email").value;
     var msg = document.getElementById("verify-message");
-    var verifyBtn = document.querySelector("#forgot-step-2 button[onclick='verifyCode();']");
-
+    var verifyBtn = document.getElementById("forgot-password-verify-code-btn");
+    
     msg.classList.remove("hidden");
 
-    if (code.length !== 6 || !/^\d+$/.test(code)) {
+    var regex = /^\d+$/;
+    
+    if (code.length !== 6 || !regex.test(code)) {
         msg.className = "mb-4 p-3 rounded-lg text-sm text-red-500";
         msg.innerHTML = "Enter exactly 6 digits!";
     } else {
@@ -176,12 +179,12 @@ function verifyCode() {
         msg.innerHTML = "Verifying... <span class='inline-block animate-spin'>⏳</span>";
         verifyBtn.disabled = true;
         verifyBtn.style.opacity = "0.6";
-
+        
         var form = new FormData();
         form.append("email", email);
         form.append("code", code);
         form.append("action", "verify");
-
+        
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "process/resetPasswordProcess.php", true);
         xhr.onload = () => {
@@ -208,16 +211,15 @@ function verifyCode() {
     }
 }
 
-// Reset Password
 function resetPassword() {
     var pwd = document.getElementById("reset-password").value;
     var confirm = document.getElementById("reset-password-confirm").value;
     var email = document.getElementById("forgot-email").value;
     var msg = document.getElementById("reset-message");
-    var resetBtn = document.querySelector("#forgot-step-3 button[onclick='resetPassword();']");
-
+    var resetBtn = document.getElementById("forgot-password-reset-password-btn");
+    
     msg.classList.remove("hidden");
-
+    
     if (!pwd || !confirm) {
         msg.className = "mb-4 p-3 rounded-lg text-sm text-red-500";
         msg.innerHTML = "All fields required!";
@@ -232,14 +234,13 @@ function resetPassword() {
         msg.innerHTML = "Resetting... <span class='inline-block animate-spin'>⏳</span>";
         resetBtn.disabled = true;
         resetBtn.style.opacity = "0.6";
-
+        
         var form = new FormData();
-
         form.append("email", email);
         form.append("password", pwd);
         form.append("cpassword", confirm);
         form.append("action", "reset");
-
+        
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "process/resetPasswordProcess.php", true);
         xhr.onload = () => {
@@ -266,7 +267,7 @@ function resetPassword() {
     }
 }
 
-function Fogetpassword() {
+function openForgotPasswordModal(){
     document.getElementById("forgot-password-modal").classList.remove("hidden");
     document.getElementById("forgot-step-1").classList.remove("hidden");
     document.getElementById("forgot-step-2").classList.add("hidden");
@@ -274,9 +275,9 @@ function Fogetpassword() {
     document.getElementById("forgot-email").focus();
 }
 
-function closeForgotPasswordModal() {
+function closeForgotPasswordModal(){
     document.getElementById("forgot-password-modal").classList.add("hidden");
-
+    
     document.getElementById("forgot-email").value = "";
     document.getElementById("verify-code").value = "";
     document.getElementById("reset-password").value = "";
@@ -285,88 +286,11 @@ function closeForgotPasswordModal() {
     document.getElementById("forgot-message").classList.add("hidden");
     document.getElementById("verify-message").classList.add("hidden");
     document.getElementById("reset-message").classList.add("hidden");
-
 }
 
-function backToEmail() {
+function backToEmail(){
     document.getElementById("forgot-step-2").classList.add("hidden");
     document.getElementById("forgot-step-1").classList.remove("hidden");
     document.getElementById("verify-code").value = "";
     document.getElementById("verify-message").classList.add("hidden");
-    document.getElementById("forgot-message").classList.add("hidden");
-}
-
-// Admin Logic
-function adminLogin(event) {
-    if (event) event.preventDefault();
-    var email = document.getElementById("email").value;
-    var loginBtn = document.getElementById("loginBtn");
-
-    if (!email) {
-        alert("Please enter email");
-        return;
-    }
-
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = "Sending... <span class='inline-block animate-spin'>⌛</span>";
-
-    var form = new FormData();
-    form.append("email", email);
-
-    var r = new XMLHttpRequest();
-    r.open("POST", "process/adminLoginProcess.php", true);
-    r.onload = function () {
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = "Send Verification Code";
-        var response = r.responseText.trim();
-
-        if (response == "success") {
-            document.getElementById("step-1").classList.add("hidden");
-            document.getElementById("step-2").classList.remove("hidden");
-            document.getElementById("headerTitle").innerText = "Verification";
-            document.getElementById("headerSubtitle").innerText = "Enter the 6-digit code sent to " + email;
-        } else {
-            alert(response);
-        }
-    };
-    r.send(form);
-}
-
-function adminVerfiy(event) {
-    if (event) event.preventDefault();
-    var vcode = document.getElementById("vcode").value;
-    var verifyBtn = document.getElementById("verifyBtn");
-
-    if (vcode.length != 6) {
-        alert("Please enter 6-digit code");
-        return;
-    }
-
-    verifyBtn.disabled = true;
-    verifyBtn.innerHTML = "Verifying... <span class='inline-block animate-spin'>⌛</span>";
-
-    var form = new FormData();
-    form.append("vcode", vcode);
-
-    var r = new XMLHttpRequest();
-    r.open("POST", "process/adminVerifyProcess.php", true);
-    r.onload = function () {
-        verifyBtn.disabled = false;
-        verifyBtn.innerHTML = "Verify & Login";
-        var response = r.responseText.trim();
-
-        if (response == "success") {
-            window.location = "admin-dashboard.php";
-        } else {
-            alert(response);
-        }
-    };
-    r.send(form);
-}
-
-function goToStep1() {
-    document.getElementById("step-1").classList.remove("hidden");
-    document.getElementById("step-2").classList.add("hidden");
-    document.getElementById("headerTitle").innerText = "Admin Panel";
-    document.getElementById("headerSubtitle").innerText = "sign in to manage SkillShop";
 }

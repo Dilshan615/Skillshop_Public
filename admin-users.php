@@ -7,13 +7,13 @@ if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] != true
 
 require_once "db/connection.php";
 
- $query = "SELECT u.*, GROUP_CONCAT(at.`name`) AS `roles`
+$query = "SELECT u.*, GROUP_CONCAT(at.`name`) AS `roles`
           FROM `user` u
           LEFT JOIN `user_has_account_type` uhat ON u.`id` = uhat.`user_id`
           LEFT JOIN `account_type` at ON uhat.`account_type_id`=at.`id`
           GROUP BY u.`id`
           ORDER BY u.`created_at` DESC";
- $users = Database::search($query);
+$users = Database::search($query);
 
 ?>
 
@@ -49,8 +49,12 @@ require_once "db/connection.php";
                 <a href="admin-products.php" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-xl text-sm font-medium transition-colors">
                     <span>🛍️</span> Product Management
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-xl text-sm font-medium transition-colors">
+                <a href="admin-trasactions.php" class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-xl text-sm font-medium transition-colors">
                     <span>📜</span> Transactions
+                </a>
+                <a href="admin-dashboard.php?openMessages=true"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-xl text-sm font-medium transition-colors">
+                    <span>💬</span> Support Messages
                 </a>
             </nav>
 
@@ -74,72 +78,72 @@ require_once "db/connection.php";
                 <h2 class="text-xl font-extrabold text-slate-900">Manage Users</h2>
                 <div class="flex items-center gap-4">
                     <input type="text" id="userSearch" onkeyup="filterUsers();" placeholder="Search users...."
-                    class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-4
-                    focus:ring-blue-500/10 outline-none"/>
+                        class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-4 focus:ring-4
+                    focus:ring-blue-500/10 outline-none" />
                 </div>
             </header>
-        
-            <div class="p-8">
-               <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                 <table class="w-full text-left" id="userTable">
-                    <thead>
-                        <tr class="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
-                           <th class="px-8 py-4">User Details</th>
-                           <th class="px-8 py-4">Roles</th>
-                           <th class="px-8 py-4">Joined Date</th>
-                           <th class="px-8 py-4">Status</th>
-                           <th class="px-8 py-4">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                       <?php while($user = $users->fetch_assoc()): ?>
-                          <tr class="hover:bg-slate-50/50 transition-colors user-row">
-                             <td class="px-8 py-5">
-                                <div class="flex items-center gap-3">
-                                   <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center
-                                   font-bold text-slate-400">
-                                     <?= substr($user["fname"], 0, 1) ?>
-                                   </div>
-                                   <div>
-                                     <p class="text-sm font-bold text-slate-900 user-name"><?= $user["fname"] . " " . $user["lname"]; ?></p>
-                                     <p class="text-xs text-slate-500 user-email">
-                                       <?= $user["email"]; ?>
-                                     </p>
-                                   </div>
-                                </div>
-                             </td>
-                             <td class="px-8 py-5">
-                                <div class="flex gap-1">
-                                  <?php 
-                                    $roles = explode(",", $user["roles"]);
-                                    foreach($roles as $role):
-                                        $color = ($role == "seller") ? "bg-indigo-50 text-indigo-600" : "bg-blue-50 text-blue-600";
-                                  ?>
-                                  <span class="px-2 py-0.5<?= $color ?> text-[9px] font-black uppercase rounded-md"><?= $role ?></span>
-                                  <?php endforeach; ?>
-                                </div>
-                             </td>
-                             <td class="px-8 py-5 text-xs text-slate-500">
-                               <?= date("M j, Y", strtotime($user["created_at"]));?>
-                             </td>
-                             <td class="px-8 py-5">
-                               <span id="status-<?= $user["id"]; ?>" class="px-3 py-1 text-[10px] font-bold rounded-full uppercase <?= ($user["status"] == "active") ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"; ?>">
-                                <?= $user["status"]; ?>
 
-                               </span>
-                             </td>
-                             <td class="px-8 py-5 text-center">
-                                  <button onclick="toggleUserStatus(<?= $user['id']; ?>);" id="btn-<?= $user["id"];?>"
-                                  class="px-4 py-2 rounded-lg text-xs font-bold transition-all <?= ($user["status"] == "active") ?
-                                  "bg-red-50 text-red-600 hover:bg-red-600 hover:text-white" : "bg-green-600 text-white hover:bg-green-700"; ?>">
-                                      <?= ($user["status"] == "active") ? "Block" : "Unblock"; ?>
-                                  </button>
-                             </td>
-                          </tr>
-                       <?php endwhile; ?>
-                    </tbody>
-                 </table>
-               </div>
+            <div class="p-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <table class="w-full text-left" id="userTable">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-widest">
+                                <th class="px-8 py-4">User Details</th>
+                                <th class="px-8 py-4">Roles</th>
+                                <th class="px-8 py-4">Joined Date</th>
+                                <th class="px-8 py-4">Status</th>
+                                <th class="px-8 py-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <?php while ($user = $users->fetch_assoc()): ?>
+                                <tr class="hover:bg-slate-50/50 transition-colors user-row">
+                                    <td class="px-8 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center
+                                   font-bold text-slate-400">
+                                                <?= substr($user["fname"], 0, 1) ?>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-slate-900 user-name"><?= $user["fname"] . " " . $user["lname"]; ?></p>
+                                                <p class="text-xs text-slate-500 user-email">
+                                                    <?= $user["email"]; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        <div class="flex gap-1">
+                                            <?php
+                                            $roles = explode(",", $user["roles"]);
+                                            foreach ($roles as $role):
+                                                $color = ($role == "seller") ? "bg-indigo-50 text-indigo-600" : "bg-blue-50 text-blue-600";
+                                            ?>
+                                                <span class="px-2 py-0.5<?= $color ?> text-[9px] font-black uppercase rounded-md"><?= $role ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5 text-xs text-slate-500">
+                                        <?= date("M j, Y", strtotime($user["created_at"])); ?>
+                                    </td>
+                                    <td class="px-8 py-5">
+                                        <span id="status-<?= $user["id"]; ?>" class="px-3 py-1 text-[10px] font-bold rounded-full uppercase <?= ($user["status"] == "active") ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"; ?>">
+                                            <?= $user["status"]; ?>
+
+                                        </span>
+                                    </td>
+                                    <td class="px-8 py-5 text-center">
+                                        <button onclick="toggleUserStatus(<?= $user['id']; ?>);" id="btn-<?= $user["id"]; ?>"
+                                            class="px-4 py-2 rounded-lg text-xs font-bold transition-all <?= ($user["status"] == "active") ?
+                                                                                                                "bg-red-50 text-red-600 hover:bg-red-600 hover:text-white" : "bg-green-600 text-white hover:bg-green-700"; ?>">
+                                            <?= ($user["status"] == "active") ? "Block" : "Unblock"; ?>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </main>
@@ -168,7 +172,7 @@ require_once "db/connection.php";
         async function toggleUserStatus(userId) {
             const btn = document.getElementById('btn-' + userId);
             const statusSpan = document.getElementById('status-' + userId);
-            
+
             const originalText = btn.innerText;
             btn.disabled = true;
             btn.innerText = '...';
@@ -177,7 +181,10 @@ require_once "db/connection.php";
             fd.append('id', userId);
 
             try {
-                const res = await fetch('process/toggleUserStatus.php', { method: 'POST', body: fd });
+                const res = await fetch('process/toggleUserStatus.php', {
+                    method: 'POST',
+                    body: fd
+                });
                 const data = await res.json();
 
                 if (data.success) {

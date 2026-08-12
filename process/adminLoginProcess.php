@@ -1,34 +1,40 @@
 <?php
 session_start();
-require "../db/connection.php";
-require "PHPMailer/email.php";
+require_once "../db/connection.php";
 
-if (isset($_POST["email"])) {
-    $email = $_POST["email"];
+header('Content-Type: application/json');
 
-    if (empty($email)) {
-        echo "Please enter your email.";
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email format.";
-    } else {
-        // Check if admin exists
-        $result = Database::search("SELECT * FROM `admin` WHERE `email`=?", "s", [$email]);
+$email = isset($_POST["email"]) ? $_POST["email"] : "";
 
-        if ($result->num_rows > 0) {
-            $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-            Database::iud("UPDATE `admin` SET `vcode`=? WHERE `email`=?", "ss", [$code, $email]);
-
-            if (EmailHelper::sendAdminVerificationCode($email, "Admin", $code)) {
-                $_SESSION["admin_email"] = $email;
-                echo "success";
-            } else {
-                echo "Email sending failed.";
-            }
-        } else {
-            echo "Access Denied. You are not an admin.";
-        }
-    }
-} else {
-    echo "No email provided.";
+if (empty($email)) {
+    echo json_encode(["success" => false, "message" => "Email is required."]);
+    exit();
 }
-?>
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["success" => false, "message" => "Invalid email format."]);
+    exit();
+}
+
+$res = Database::search("SELECT * FROM `admin` WHERE `email`=?", "s", [$email]);
+
+if ($res && $res->num_rows > 0) {
+        $admin = $res->fetch_assoc();
+        $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        Database::iud("UPDATE `admin` SET `vcode`=? WHERE `email`=?", "ss", [$code, $email]);
+
+        require_once "email/email.php";
+        $admin_name = $admin["fname"] . " " . $admin["lname"];
+        $mail_sent = EmailHelper::sendAdminVerificationCode($email, $admin_name, $code);
+
+        $_SESSION["admin_verify_email"] = $email;
+
+        echo json_encode([
+            "success" => true,
+            "message" => $mail_sent ? "Verification code sent to $email" : "Code generated, but email sending failed. Check SMTP config."
+        ]);
+
+} else {
+     echo json_encode(["success" => false, "message" => "Admin email not found."]);
+}

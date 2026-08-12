@@ -4,31 +4,29 @@ require_once "../db/connection.php";
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] != true) {
+if (!isset($_SESSION["admin_logged_in"])) {
     echo json_encode(["success" => false, "message" => "Unauthorized"]);
     exit();
 }
 
- $id = isset($_POST["id"]) ? $_POST["id"] : "";
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
 
 if (empty($id)) {
     echo json_encode(["success" => false, "message" => "User ID is required"]);
     exit();
 }
 
- $res = Database::search("SELECT `status` FROM `user` WHERE `id`=?", "i", [$id]);
+$res = Database::search("SELECT `status` FROM `user` WHERE `id`=?", "i", [$id]);
 
 if($res && $res->num_rows > 0){
-  $user = $res->fetch_assoc();
-  $newStatus = ($user["status"] == "active") ? "blocked" : "active";
 
+    $user = $res->fetch_assoc();
+    $newStatus =  ($user["status"] == "active") ? "blocked" : "active";
+    
+    Database::iud("UPDATE `user` SET `status`=? WHERE `id`=?","si",[$newStatus,$id]);
 
-  Database::iud("UPDATE `user` SET `status`=? WHERE `id`=?", "si", [$newStatus, $id]);
+    echo json_encode(["success" => true, "newStatus" => $newStatus]);
 
-  echo json_encode(["success" => true, "newStatus" => $newStatus]);
-
-}else{
+} else {
     echo json_encode(["success" => false, "message" => "User not found!"]);
 }
-
-?>

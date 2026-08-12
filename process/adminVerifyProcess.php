@@ -1,39 +1,41 @@
 <?php
 session_start();
-require "../db/connection.php";
+require_once "../db/connection.php";
 
-if (isset($_POST["vcode"])) {
-    $v_code = $_POST["vcode"];
+header('Content-Type: application/json');
 
-    if (empty($v_code)) {
-        echo "Please enter the verification code.";
-    } else if (strlen($v_code) != 6) {
-        echo "Verification code must be 6 digits.";
-    } else {
-        if (isset($_SESSION["admin_email"])) {
-            $email = $_SESSION["admin_email"];
-
-            $result = Database::search("SELECT * FROM `admin` WHERE `email`=? AND `vcode`=?", "ss", [$email, $v_code]);
-
-            if ($result->num_rows > 0) {
-                // Login Success
-                $admin_data = $result->fetch_assoc();
-                $_SESSION["admin_logged_in"] = true;
-                $_SESSION["admin_fname"] = $admin_data["fname"];
-                $_SESSION["admin_lname"] = $admin_data["lname"];
-                
-                // Important: Clear the code after successful login
-                Database::iud("UPDATE `admin` SET `vcode`='' WHERE `email`=?", "s", [$email]);
-
-                echo "success";
-            } else {
-                echo "Invalid verification code.";
-            }
-        } else {
-            echo "Session expired. Please try again.";
-        }
-    }
-} else {
-    echo "Verification code not found.";
+if (!isset($_SESSION["admin_verify_email"])) {
+    echo json_encode(["success" => false, "message" => "Session expired. Please login again."]);
+    exit();
 }
-?>
+
+$email = $_SESSION["admin_verify_email"];
+$vcode = isset($_POST["vcode"]) ? $_POST["vcode"] : "";
+
+if (empty($vcode)) {
+    echo json_encode(["success" => false, "message" => "Verification code is required."]);
+    exit();
+}
+
+$res = Database::search("SELECT * FROM `admin` WHERE `email`=? AND `vcode`=?", "ss", [$email, $vcode]);
+
+if ($res && $res->num_rows > 0) {
+    // Correct code
+    $admin = $res->fetch_assoc();
+    
+    // Set admin session
+    $_SESSION["admin_logged_in"] = true;
+    $_SESSION["admin_email"] = $email;
+    $_SESSION["admin_fname"] = $admin["fname"];
+    $_SESSION["admin_lname"] = $admin["lname"];
+    
+    // Clear code from DB
+    Database::iud("UPDATE `admin` SET `vcode`=NULL WHERE `email`=?", "s", [$email]);
+    
+    // Clear verify session
+    unset($_SESSION["admin_verify_email"]);
+
+    echo json_encode(["success" => true, "message" => "Welcome back, " . $admin["fname"]]);
+} else {
+    echo json_encode(["success" => false, "message" => "Invalid verification code."]);
+}

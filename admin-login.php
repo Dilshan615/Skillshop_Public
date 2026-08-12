@@ -101,7 +101,13 @@ if (isset($_SESSION["admin_logged_in"]) && $_SESSION["admin_logged_in"] == true)
     </div>
 
     <script>
-        function adminLogin(e) {
+        function goToStep1() {
+            document.getElementById("step1").classList.remove("hidden");
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("msg1").classList.add("hidden");
+        }
+
+        async function adminLogin(e) {
             e.preventDefault();
             const email = document.getElementById("email");
             const msg = document.getElementById("msg1");
@@ -116,35 +122,35 @@ if (isset($_SESSION["admin_logged_in"]) && $_SESSION["admin_logged_in"] == true)
 
             btn.disabled = true;
             btn.innerHTML = "<i class='fas fa-circle-notch fa-spin mr-2'></i> Sending...";
+            msg.classList.add("hidden");
 
-            const f = new FormData();
-            f.append("email", email.value);
+            const fd = new FormData();
+            fd.append("email", email.value);
 
-            const r = new XMLHttpRequest();
-            r.open("POST", "process/adminLoginProcess.php", true);
-            r.onreadystatechange = function () {
-                if (r.readyState == 4 && r.status == 200) {
-                    const text = r.responseText.trim();
-                    if (text == "success") {
-                        document.getElementById("step1").classList.add("hidden");
-                        document.getElementById("step2").classList.remove("hidden");
-                        document.getElementById("sentEmailLabel").innerText = "Code sent to " + email.value;
-                        
-                        // Show success msg in step 2 immediately
-                        const msg2 = document.getElementById("msg2");
-                        msg2.innerHTML = "Verification code sent to " + email.value;
-                        msg2.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-green-50 text-green-700";
-                        msg2.classList.remove("hidden");
-                    } else {
-                        msg.innerHTML = text;
-                        msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-red-50 text-red-600";
-                        msg.classList.remove("hidden");
-                    }
-                    btn.disabled = false;
-                    btn.innerText = "Send Verification Code";
+            try {
+                const res = await fetch("process/adminLoginProcess.php", { method: "POST", body: fd });
+                const data = await res.json();
+
+                if (data.success) {
+                    document.getElementById("step1").classList.add("hidden");
+                    document.getElementById("step2").classList.remove("hidden");
+                    document.getElementById("sentEmailLabel").innerText = "Code sent to " + email.value;
+                    
+                    const msg2 = document.getElementById("msg2");
+                    msg2.innerHTML = data.message;
+                    msg2.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-green-50 text-green-700";
+                    msg2.classList.remove("hidden");
+                } else {
+                    msg.innerHTML = data.message;
+                    msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-red-50 text-red-600";
+                    msg.classList.remove("hidden");
                 }
-            };
-            r.send(f);
+            } catch (err) {
+                alert(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Send Verification Code";
+            }
         }
 
         async function adminVerify(e) {
@@ -162,38 +168,33 @@ if (isset($_SESSION["admin_logged_in"]) && $_SESSION["admin_logged_in"] == true)
 
             btn.disabled = true;
             btn.innerHTML = "<i class='fas fa-circle-notch fa-spin mr-2'></i> Verifying...";
+            msg.classList.add("hidden");
 
-            const f = new FormData();
-            f.append("vcode", vcode.value);
+            const fd = new FormData();
+            fd.append("vcode", vcode.value);
 
-            const r = new XMLHttpRequest();
-            r.open("POST", "process/adminVerifyProcess.php", true);
-            r.onreadystatechange = function () {
-                if (r.readyState == 4 && r.status == 200) {
-                    const text = r.responseText.trim();
-                    if (text == "success") {
-                        msg.innerHTML = "Verification successful! Redirecting...";
-                        msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-green-50 text-green-700";
-                        msg.classList.remove("hidden");
-                        setTimeout(() => {
-                            window.location = "admin-dashboard.php";
-                        }, 1500);
-                    } else {
-                        msg.innerHTML = text;
-                        msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-red-50 text-red-600";
-                        msg.classList.remove("hidden");
-                    }
-                    btn.disabled = false;
-                    btn.innerText = "Verify & Login";
+            try {
+                const res = await fetch("process/adminVerifyProcess.php", { method: "POST", body: fd });
+                const data = await res.json();
+
+                if (data.success) {
+                    msg.innerHTML = data.message;
+                    msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-green-50 text-green-700";
+                    msg.classList.remove("hidden");
+                    setTimeout(() => {
+                        window.location.href = "admin-dashboard.php";
+                    }, 1500);
+                } else {
+                    msg.innerHTML = data.message;
+                    msg.className = "p-4 rounded-xl text-sm font-medium text-center mb-6 bg-red-50 text-red-600";
+                    msg.classList.remove("hidden");
                 }
-            };
-            r.send(f);
-        }
-
-        function goToStep1() {
-            document.getElementById("step1").classList.remove("hidden");
-            document.getElementById("step2").classList.add("hidden");
-            document.getElementById("msg1").classList.add("hidden");
+            } catch (err) {
+                alert(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Verify & Login";
+            }
         }
     </script>
 </body>

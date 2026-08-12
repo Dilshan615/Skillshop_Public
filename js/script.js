@@ -1,20 +1,25 @@
-function sUp() {
-    var signup = document.getElementById("signup-form");
-    var signin = document.getElementById("signin-form");
+// Toggle Between Sign In & Sign Up Forms
+function toggleForms(){
 
-    signin.classList.toggle("hidden");
-    signup.classList.toggle("hidden");
+    var signinForm = document.getElementById("signin-form");
+    var signupForm = document.getElementById("signup-form");
+
+    signinForm.classList.toggle("hidden");
+    signinForm.classList.toggle("active");
+
+    signupForm.classList.toggle("hidden");
+    signupForm.classList.toggle("active");
+
 }
 
 // Toggle Between Password & Text in Password Inputs
-function togglePassword(inputId, btn) {
+function togglePassword(inputId, btn){
     var input = document.getElementById(inputId);
-    if (input.type == "password") {
+    if(input.type == "password"){
         input.type = "text";
         btn.innerHTML = "🙈";
     } else {
         input.type = "password";
-        btn.innerHTML = "👀";
+        btn.innerHTML = "👁️";
     }
 }
-

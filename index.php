@@ -44,7 +44,7 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                         <input type="hidden" name="active" value="signin">
                         <!-- error -->
                         <div class="hidden mt-4 p-3 rounded-lg text-sm text-center text-red-500 font-bold"
-                            id="signin_error"></div>
+                            id="signin-message"></div>
 
                         <!-- email -->
                         <label for="signin-email" class="block text-gray-700 text-sm font-semibold mb-2">
@@ -73,17 +73,17 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <label for="rememberMe" class="flex items-center">
-                                <input type="checkbox" name="rememberMe" id="rememberMe"
+                            <label for="remember" class="flex items-center">
+                                <input type="checkbox" name="rememberMe" id="remember"
                                     class="w-4 h-4 text-blue-600 rounded" <?php if ($rememberMe)
                                         echo "checked"; ?> />
                                 <span class="ml-2 text-sm text-gray-600">Remember Me</span>
                             </label>
-                            <button type="button" onclick="Fogetpassword()"
+                            <button type="button" onclick="openForgotPasswordModal()"
                                 class="text-sm text-blue-600 hover:text-blue-700 font-medium">Foget password?</button>
                         </div>
 
-                        <button onclick="login();" type="button"
+                        <button onclick="signIn();" type="button"
                             class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 transform hover:scale-105 mt-6">
                             Sign In
                         </button>
@@ -159,15 +159,15 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
 
                         <!-- error -->
                         <div class="hidden mt-4 p-3 rounded-lg text-sm text-center text-red-500 font-bold"
-                            id="singup-error-Message"></div>
+                            id="signup-message"></div>
 
                         <div class="flex justify-between">
                             <div class="mr-2">
                                 <!-- fist name -->
-                                <label for="signup-fistname" class="block text-gray-700 text-sm font-semibold mb-2">
+                                <label for="signup-firstname" class="block text-gray-700 text-sm font-semibold mb-2">
                                     Fist Name
                                 </label>
-                                <input type="text" name="fistname" id="signup-fistname" placeholder="Dilsha"
+                                <input type="text" name="fistname" id="signup-firstname" placeholder="Dilsha"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" />
                                 <!-- <span class="text-red-500 text-sm hidden font-bold" id="fname_error"></span> -->
                             </div>
@@ -211,12 +211,12 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                             <label for="signup-confirm" class="block text-gray-700 text-sm font-semibold mb-2">
                                 Confirm Password
                             </label>
-                            <input type="password" name="confirm_password" id="signup-password-confirm"
+                            <input type="password" name="confirm_password" id="signup-confirm"
                                 placeholder="**********"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                                 aria-describedby="signup-password-error" />
 
-                            <button onclick="togglePassword('signup-password-confirm',this)" type="button"
+                            <button onclick="togglePassword('signup-confirm',this)" type="button"
                                 class="absolute right-3 top-1/2 -translate-y-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
                                 aria-label="Toggle password visibility" aria-pressed="false">👀</button>
                             <p class="text-xs text-gray-500 mt-1">Minimum 8 characters</p>
@@ -326,7 +326,7 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                         </div>
 
                         <div class="flex gap-3">
-                            <button type="button" onclick="verifyCode();" class="flex-1 bg-gradient-to-r from-green-700 to-lime-700 text-white font-semibold py-2 rounded-lg
+                            <button type="button" id="forgot-password-verify-code-btn" onclick="verifyCode();" class="flex-1 bg-gradient-to-r from-green-700 to-lime-700 text-white font-semibold py-2 rounded-lg
                              hover:from-green-600 hover:to-lime-600">Send Code</button>
                             <button type="button" onclick="backToEmail();" class="flex-1 bg-gradient-to-r from-rose-700 to-red-700 text-white font-semibold py-2 rounded-lg
                              hover:from-rose-600 hover:to-red-600">Cancel</button>
@@ -352,7 +352,7 @@ $rememberMe = isset($_COOKIE["skillshop_remember"]) ? true : false;
                         </div>
 
                         <div class="flex gap-3">
-                            <button type="button" onclick="resetPassword();"
+                            <button type="button" id="forgot-password-reset-password-btn" onclick="resetPassword();"
                                 class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 ">Reset
                                 Password</button>
                             <button type="button" onclick="closeForgotPasswordModal();"

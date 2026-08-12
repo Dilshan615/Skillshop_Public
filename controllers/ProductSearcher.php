@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-class ProductSearcher {
+class ProductSearcher{
 
     private $userId;
 
@@ -9,14 +9,14 @@ class ProductSearcher {
     }
 
     private function buildWhereClause($filters){
-        $where = "WHERE p.`status` = 'active'";
+        $where = "WHERE p.`status`='active'";
         $having = "";
         $params = [];
         $paramTypes = "";
-        $havingParams = [];
+        $havingParams = []; 
         $havingTypes = "";
 
-        // search query
+        // Search query
         if(!empty($filters["q"])){
             $searchTerm = "%{$filters["q"]}%";
             $where .= " AND (p.`title` LIKE ? OR p.`description` LIKE ?)";
@@ -25,35 +25,34 @@ class ProductSearcher {
             $paramTypes .= "ss";
         }
 
-        // category filter
+        // Category filter
         if(!empty($filters["category"])){
-            $where .= " AND p.`category_id` = ?";
+            $where .= " AND p.`category_id`=?";
             $params[] = intval($filters["category"]);
             $paramTypes .= "i";
         }
 
-        // level filter (integer)
+        // Level filter
         if(!empty($filters["level"])){
-            $where .= " AND p.`level` = ?";
-            $params[] = intval($filters["level"]);
-            $paramTypes .= "i";
+            $where .= " AND p.`level`=?";
+            $params[] = $filters["level"];
+            $paramTypes .= "s";
         }
 
-        // price range filter
+        // Price range filter
         if(!empty($filters["price_min"])){
-            $where .= " AND p.`price` >= ?";
+            $where .= " AND p.`price`>=?";
             $params[] = floatval($filters["price_min"]);
             $paramTypes .= "d";
         }
-
         if(!empty($filters["price_max"])){
-            $where .= " AND p.`price` <= ?";
+            $where .= " AND p.`price`<=?";
             $params[] = floatval($filters["price_max"]);
             $paramTypes .= "d";
         }
 
-        // rating filter
-        if($filters["rating"] !== ""){
+        // Ratings filter
+        if($filters["rating"] != ""){
             $ratingVal = floatval($filters["rating"]);
             if($ratingVal == 0){
                 $having = "HAVING avg_rating = 0";
@@ -65,80 +64,72 @@ class ProductSearcher {
         }
 
         return [
-            "where"        => $where,
-            "having"       => $having,
-            "params"       => $params,
-            "types"        => $paramTypes,
+            "where" => $where,
+            "having" => $having,
+            "params" => $params,
+            "types" => $paramTypes,
             "havingParams" => $havingParams,
-            "havingTypes"  => $havingTypes
+            "havingTypes" => $havingTypes
         ];
-    }
 
-    // build order by clause for sorting
+    }   
+
+    // Build ORDER BY Clause for sorting
     private function buildSortQuery($sort){
         $allowedSorts = ["newest","price_low","price_high","rating","popular","reviews"];
         $sort = in_array($sort, $allowedSorts) ? $sort : "newest";
-
-        return match($sort){
-            "price_low"  => "ORDER BY p.`price` ASC",
+        
+        return match($sort) {
+            "price_low" => "ORDER BY p.`price` ASC",
             "price_high" => "ORDER BY p.`price` DESC",
-            "rating"     => "ORDER BY avg_rating DESC",
-            "popular"    => "ORDER BY customer_count DESC",
-            "reviews"    => "ORDER BY review_count DESC",
-            default      => "ORDER BY p.`created_at` DESC"
+            "rating" => "ORDER BY avg_rating DESC",
+            "popular" => "ORDER BY customer_count DESC",
+            "reviews" => "ORDER BY review_count DESC",
+            default => "ORDER BY p.`created_at` DESC"
         };
+
     }
 
-    // get total count for pagination
+    // Get total count for pagination
     public function getCount($filters){
         $clause = $this->buildWhereClause($filters);
-        $query = "SELECT p.`id`, AVG(COALESCE(f.`rating`,0)) AS avg_rating 
-                  FROM `product` p
-                  LEFT JOIN `order` o ON p.`id` = o.`product_id`
-                  LEFT JOIN `feedback` f ON p.`id` = f.`product_id`
-                  LEFT JOIN `user` u ON p.`seller_id` = u.`id`
+        $query = "SELECT p.`id`, AVG(COALESCE(f.`rating`,0)) AS `avg_rating` FROM `product` p 
+                  LEFT JOIN `order` o ON p.`id`=o.`product_id`
+                  LEFT JOIN `feedback` f ON p.`id`=f.`product_id`
+                  LEFT JOIN `user` u ON p.`seller_id`=u.`id`
                   {$clause["where"]}
                   GROUP BY p.`id`
-                  {$clause["having"]}";
+                  {$clause["having"]}"; 
 
-        $params = array_merge($clause["params"], $clause["havingParams"]);
-        $types  = $clause["types"] . $clause["havingTypes"];
+        $params = array_merge($clause["params"],$clause["havingParams"]);
+        $types = $clause["types"] . $clause["havingTypes"];
 
         $result = Database::search($query, $types, $params);
         return ($result && $result->num_rows > 0) ? $result->num_rows : 0;
-    } 
 
-    // search products with filters and sorting
+    }
+
+    // Search product with filters and sorting
     public function search($filters, $page = 1, $perPage = 12){
-        $clause    = $this->buildWhereClause($filters);
+        $clause = $this->buildWhereClause($filters);
         $sortQuery = $this->buildSortQuery($filters["sort"] ?? "newest");
-        $offset    = ($page - 1) * $perPage;
-
-        $query = "SELECT 
-                    p.`id`, 
-                    p.`title`, 
-                    p.`description`, 
-                    p.`price`, 
-                    p.`image_url`, 
-                    p.`level`, 
-                    p.`created_at`,
-                    u.`fname` AS `seller_name`, 
-                    u.`id` AS `seller_id`,
-                    COUNT(DISTINCT o.`order_id`) AS customer_count,
-                    AVG(COALESCE(f.`rating`,0)) AS avg_rating,
-                    COUNT(DISTINCT f.`id`) AS review_count
+        $offset = ($page - 1) * $perPage;
+        $query = "SELECT p.`id`, p.`title`, p.`description`, p.`image_url`, p.`price`, p.`level`, p.`created_at`,
+                    u.`fname` AS `seller_name`, u.`id` AS `seller_id`,
+                    COUNT(DISTINCT o.`order_id`) AS `customer_count`,
+                    AVG(COALESCE(f.`rating`,0)) AS `avg_rating`,
+                    COUNT(DISTINCT f.`id`) AS `review_count`
                   FROM `product` p
-                  LEFT JOIN `user` u ON p.`seller_id` = u.`id`
-                  LEFT JOIN `order` o ON p.`id` = o.`product_id`
-                  LEFT JOIN `feedback` f ON p.`id` = f.`product_id`
+                  LEFT JOIN `user` u ON p.`seller_id`=u.`id`
+                  LEFT JOIN `order` o ON p.`id`=o.`product_id`
+                  LEFT JOIN `feedback` f ON p.`id`=f.`product_id`
                   {$clause["where"]}
                   GROUP BY p.`id`
                   {$clause["having"]}
                   {$sortQuery}
                   LIMIT ? OFFSET ?";
-
-        $params = array_merge($clause["params"], $clause["havingParams"], [$perPage, $offset]);
-        $types  = $clause["types"] . $clause["havingTypes"] . "ii";
+        $params = array_merge($clause["params"],$clause["havingParams"],[$perPage, $offset]);
+        $types = $clause["types"] . $clause["havingTypes"] . "ii";
 
         $result = Database::search($query, $types, $params);
         $products = [];
@@ -149,5 +140,7 @@ class ProductSearcher {
         }
         return $products;
     }
+
 }
+
 ?>

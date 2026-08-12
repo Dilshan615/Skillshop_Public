@@ -1,74 +1,153 @@
 <mxfile host="65bd71144e">
     <diagram id="w0NlM7Fwy8LXXzTkksx2" name="Page-1">
-        <mxGraphModel dx="995" dy="464" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="8" value="" style="edgeStyle=none;html=1;" parent="1" source="4" target="7" edge="1">
+                
+                <!-- USER FLOW VERTICES -->
+                <mxCell id="user_start" value="&lt;b&gt;START (User)&lt;/b&gt;&lt;br&gt;(index.php)" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="20" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_signup" value="&lt;b&gt;Sign Up&lt;/b&gt;&lt;br&gt;(index.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="90" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_signin" value="&lt;b&gt;Sign In&lt;/b&gt;&lt;br&gt;(index.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="160" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_forgot" value="&lt;b&gt;Forgot Password&lt;/b&gt;&lt;br&gt;(index.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="160" width="130" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_verify" value="&lt;b&gt;Verify Code&lt;/b&gt;&lt;br&gt;(index.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="235" width="130" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_reset" value="&lt;b&gt;Reset Password&lt;/b&gt;&lt;br&gt;(index.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="310" width="130" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_home" value="&lt;b&gt;Home&lt;/b&gt;&lt;br&gt;(home.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="235" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="user_decision" value="&lt;b&gt;Buyer | Seller&lt;/b&gt;&lt;br&gt;(Profile Select)" style="whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="310" width="100" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="buyer_dash" value="&lt;b&gt;Buyer Dashboard&lt;/b&gt;&lt;br&gt;(buyer-dashboard.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="385" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="seller_dash" value="&lt;b&gt;Seller Dashboard&lt;/b&gt;&lt;br&gt;(seller-dashboard.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="385" width="150" height="50" as="geometry"/>
+                </mxCell>
+
+                <!-- ADMIN FLOW VERTICES -->
+                <mxCell id="admin_start" value="&lt;b&gt;START (Admin)&lt;/b&gt;&lt;br&gt;(admin-login.php)" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="20" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_login" value="&lt;b&gt;Admin Login&lt;/b&gt;&lt;br&gt;(admin-login.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="90" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_verify" value="&lt;b&gt;Verification&lt;/b&gt;&lt;br&gt;(admin-login.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="160" width="120" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_dash" value="&lt;b&gt;Admin Dashboard&lt;/b&gt;&lt;br&gt;(admin-dashboard.php)" style="whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="565" y="235" width="150" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_users" value="&lt;b&gt;User Management&lt;/b&gt;&lt;br&gt;(admin-users.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="310" width="150" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_products" value="&lt;b&gt;Product Management&lt;/b&gt;&lt;br&gt;(admin-products.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="590" y="310" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_tx" value="&lt;b&gt;Transactions&lt;/b&gt;&lt;br&gt;(admin-trasactions.php)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="310" width="160" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin_support" value="&lt;b&gt;Support Messages&lt;/b&gt;&lt;br&gt;(Dashboard Modal)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="385" width="150" height="45" as="geometry"/>
+                </mxCell>
+
+                <!-- EDGES (CONNECTIONS) -->
+                <!-- User Edges -->
+                <mxCell id="e_user_start_signup" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_start" target="user_signup" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="&lt;b&gt;START&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="20" width="120" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="10" value="" style="edgeStyle=none;html=1;" parent="1" source="7" target="9" edge="1">
+                <mxCell id="e_user_signup_signin" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_signup" target="user_signin" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" value="&lt;b&gt;Sign Up&lt;/b&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="80" width="120" height="45" as="geometry"/>
-                </mxCell>
-                <mxCell id="12" value="" style="edgeStyle=none;html=1;" parent="1" source="9" target="11" edge="1">
+                <mxCell id="e_user_signin_home" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_signin" target="user_home" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="" style="edgeStyle=none;html=1;" parent="1" source="9" target="13" edge="1">
+                <mxCell id="e_user_signin_forgot" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_signin" target="user_forgot" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_user_forgot_verify" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_forgot" target="user_verify" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_user_verify_reset" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_verify" target="user_reset" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_user_reset_signin" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="user_reset" target="user_signin" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="500" y="160"/>
+                            <mxPoint x="95" y="375"/>
+                            <mxPoint x="10" y="375"/>
+                            <mxPoint x="10" y="183"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="9" value="&lt;b&gt;Sign In&lt;/b&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="160" width="120" height="42.5" as="geometry"/>
-                </mxCell>
-                <mxCell id="20" value="" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="19" target="11" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="300" y="230" as="sourcePoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="22" value="" style="edgeStyle=none;html=1;" parent="1" source="11" target="21" edge="1">
+                <mxCell id="e_user_home_decision" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="user_home" target="user_decision" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="&lt;b&gt;Home&lt;/b&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="240" width="120" height="46.25" as="geometry"/>
+                <mxCell id="e_user_dec_buyer" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="user_decision" target="buyer_dash" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="" style="edgeStyle=none;html=1;" parent="1" source="13" target="9" edge="1">
+                <mxCell id="e_user_dec_seller" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="user_decision" target="seller_dash" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+
+                <!-- Admin Edges -->
+                <mxCell id="e_admin_start_login" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="admin_start" target="admin_login" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_login_verify" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="admin_login" target="admin_verify" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_verify_dash" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="admin_verify" target="admin_dash" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_dash_users" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="admin_dash" target="admin_users" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_dash_products" value="" style="edgeStyle=none;html=1;fontColor=#000000;" parent="1" source="admin_dash" target="admin_products" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_dash_tx" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="admin_dash" target="admin_tx" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_admin_dash_support" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="admin_dash" target="admin_support" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="600" y="231.25" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="500" y="200"/>
+                            <mxPoint x="640" y="408"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" value="Forgot passwroda" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
-                    <mxGeometry x="540" y="160" width="120" height="42.5" as="geometry"/>
+
+                <!-- Support Chat Connections (Dashed) -->
+                <mxCell id="e_buyer_chat_support" value="&lt;span style=&quot;font-size: 9px; color: #000000;&quot;&gt;Chat&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;strokeColor=#FF8000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="buyer_dash" target="admin_support" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="140" y="455"/>
+                            <mxPoint x="450" y="455"/>
+                            <mxPoint x="450" y="408"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="19" value="&lt;b&gt;Header&lt;br&gt;Footer&lt;/b&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="140" y="240" width="120" height="40" as="geometry"/>
+                <mxCell id="e_seller_chat_support" value="&lt;span style=&quot;font-size: 9px; color: #000000;&quot;&gt;Chat&lt;/span&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;strokeColor=#FF8000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontColor=#000000;" parent="1" source="seller_dash" target="admin_support" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="360" y="455"/>
+                            <mxPoint x="535" y="455"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="" style="edgeStyle=none;html=1;" parent="1" source="21" target="30" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="33" value="" style="edgeStyle=none;html=1;" parent="1" source="21" target="32" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="21" value="&lt;b&gt;Buyer | Seller&lt;/b&gt;" style="whiteSpace=wrap;html=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="350" y="320" width="100" height="40.63" as="geometry"/>
-                </mxCell>
-                <mxCell id="30" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;b&gt;Buyer&amp;nbsp;&lt;/b&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="160" y="360.63" width="120" height="39.38" as="geometry"/>
-                </mxCell>
-                <mxCell id="32" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;b&gt;Seller&lt;/b&gt;&lt;/span&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;strokeWidth=2;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
-                    <mxGeometry x="520" y="360.63" width="120" height="39.38" as="geometry"/>
-                </mxCell>
+
             </root>
         </mxGraphModel>
     </diagram>

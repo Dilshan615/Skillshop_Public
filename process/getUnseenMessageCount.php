@@ -13,12 +13,9 @@ $userId = $_SESSION["user_id"];
 
 $res = Database::search(
     "SELECT COUNT(`id`) AS `c` FROM `chat` WHERE `to_user_id`=? AND `status`='unseen'",
-    "i",
-    [$userId]
+    "i",[$userId]
 );
 
 $count = ($res && $res->num_rows > 0) ? $res->fetch_assoc()["c"] : 0;
 
 echo json_encode(["count" => intval($count)]);
-
-?>

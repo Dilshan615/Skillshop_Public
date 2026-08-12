@@ -2,7 +2,7 @@
 session_start();
 require_once "../db/connection.php";
 
-header("Content-Type: application/json");
+header('Content-Type: application/json');
 
 if (!isset($_SESSION["admin_logged_in"])) {
     echo json_encode(["success" => false, "message" => "Unauthorized"]);
@@ -18,16 +18,15 @@ if (empty($id)) {
 
 $res = Database::search("SELECT `status` FROM `product` WHERE `id`=?", "i", [$id]);
 
-if ($res && $res->num_rows > 0){
-    $product = $res->fetch_assoc();
-    $newStatus = ($product["status"] == "active") ? "blocked" : "active";
+if($res && $res->num_rows > 0){
 
-    Database::iud("UPDATE `product` SET `status`=? WHERE `id`=?", "si", [$newStatus, $id]);
+    $product = $res->fetch_assoc();
+    $newStatus =  ($product["status"] == "active") ? "blocked" : "active";
+    
+    Database::iud("UPDATE `product` SET `status`=? WHERE `id`=?","si",[$newStatus,$id]);
 
     echo json_encode(["success" => true, "newStatus" => $newStatus]);
+
 } else {
     echo json_encode(["success" => false, "message" => "Product not found!"]);
 }
-
-
-?>
