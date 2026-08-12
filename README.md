@@ -92,6 +92,14 @@ File: `process/PHPMailer/email.php`
 
 ---
 
+## 🗺️ System Architecture
+
+The complete user and admin workflow diagram is available in the root folder as [text.drawio](file:///c:/xampp/htdocs/project/Skillshop/text.drawio).
+
+To view or edit this diagram directly within VS Code, you should install the **Draw.io Integration** extension (extension ID: `hediet.vscode-drawio`). Once installed, opening `text.drawio` in VS Code will display the interactive flowchart editor.
+
+---
+
 ## 🎨 Design Aesthetics
 
 SkillShop is designed with a **premium user experience** in mind:
